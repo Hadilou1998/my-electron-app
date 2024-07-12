@@ -8,6 +8,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     for (const dependency of ['chrome', 'node', 'electron']) {
-        replaceText(`[data-dependency="${dependency}"]`, `Dependency: ${dependency}`);
+        replaceText(`${dependency}-version`, process.versions[dependency]);
     }
 });
