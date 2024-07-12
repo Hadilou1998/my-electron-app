@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Nav from '../components/Nav';
 import CalendarIcon from '../components/icons/CalendarICon';
 import EyeIcon from '../components/icons/EyeIcon';
-import { NavLink } from 'react-router-dom';
 import TrashIcon from '../components/icons/TrashIcon';
+import { NavLink } from 'react-router-dom';
 
 interface Chat {
     id: number;
@@ -32,16 +32,16 @@ export default function Messages() {
         },
     ]);
     return (
-        <main className="bg-slate-50 p-5 flex flex-col items-center gap-4 min-w-full min-h-screen">
+        <main className="flex flex-col items-center min-w-full min-h-screen gap-4 p-5 bg-slate-50">
             <Nav />
             <div>
-                <h1 className="text-6xl font-semibold mb-10 text-center">
+                <h1 className="mb-10 text-6xl font-semibold text-center">
                     Messages
                 </h1>
                 <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {chatsArray.map((c) => (
                         <li
-                            className="border h-46 p-5 rounded-xl bg-white hover:shadow-md"
+                            className="p-5 bg-white border h-46 rounded-xl hover:shadow-md"
                             key={c.id}
                         >
                             <div className="flex items-center justify-between text-sm uppercase text-slate-400">
@@ -51,11 +51,11 @@ export default function Messages() {
                             <div className="italic text-slate-400">
                                 {c.question}
                             </div>
-                            <div className="mt-4 flex justify-between">
-                                <NavLink to="/messages/:id" className="bg-blue-500 rounded-full p-2 hover:bg-blue-800">
+                            <div className="flex justify-between mt-4">
+                                <NavLink to="/messages/:id" className="p-2 bg-blue-500 rounded-full hover:bg-blue-800">
                                     <EyeIcon />
                                 </NavLink>
-                                <button className="bg-red-700 rounded-full p-2 hover:bg-red-800">
+                                <button className="p-2 bg-red-700 rounded-full hover:bg-red-800">
                                     <TrashIcon />
                                 </button>
                             </div>
