@@ -36,7 +36,7 @@ export default function App() {
   const [apiKey, setApiKey] = useState<string>(process.env.OPENAI_API_KEY || "");
   const prepromt = "En tant que spécialiste en préparation de cocktail. Tu reçois des questions sur la thématique des cocktails, avec tes 20 années d'expérience tu dois répondre par un message simple, vulgarisé et drôle. Voici la question à la lquelle tu répondras : ";
 
-  const openai = new OpenAI();
+  const openai = new OpenAI({ apiKey: apiKey  });
   async function askOpenAI() {
     const completion = await openai.chat.completions.create({
       messages: [{ role: "system", content: prepromt + question + " ?"}],
