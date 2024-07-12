@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import Chat from "../components/Chat";
 import Nav from "../components/Nav";
 import Typed from 'typed.js';
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import OpenAI from "openai";
 
 // Interface pour le message de réponse
 interface Chat {
@@ -28,11 +29,29 @@ export default function App() {
         typed.destroy();
       };
   }, []);
+
+  const [isResponded, setIsResponded] = useState<boolean>(false);
+  const [response, setResponse] = useState<string>("La réponse est vide.");
+  const [question, setQuestion] = useState<string>("Quel est le meilleur cocktail en été?");
+  const [apiKey, setApiKey] = useState<string>(process.env.OPENAI_API_KEY || "");
+  const prepromt = "En tant que spécialiste en préparation de cocktail. Tu reçois des questions sur la thématique des cocktails, avec tes 20 années d'expérience tu dois répondre par un message simple, vulgarisé et drôle. Voici la question à la lquelle tu répondras : ";
+
+  const openai = new OpenAI();
+  async function askOpenAI() {
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "system", content: prepromt + question + " ?"}],
+      model: "gpt-3.5-turbo",
+    });
   
-  const [IsResponded, setIsResponded] = useState<boolean>(false);
-  const [response, setResponse] = useState<string>('la réponse est vide');
-  const [question, setQuestion] = useState<string>('');
-  const [apiKey, setApiKey] = useState<string>(process.env.OPENAI_API_KEY || '');
+    setResponse(completion.choices[0]);
+  }
+
+  useEffect(() => {
+    askOpenAI();
+    console.log(response);
+  }, []);
+
+
 
   return (
     <main className="flex flex-col items-center justify-between min-w-full min-h-screen p-5 bg-slate-50">
